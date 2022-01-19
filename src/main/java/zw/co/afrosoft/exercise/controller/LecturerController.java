@@ -2,10 +2,7 @@ package zw.co.afrosoft.exercise.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zw.co.afrosoft.exercise.dto.LecturerDto;
 import zw.co.afrosoft.exercise.service.LecturerService;
 
@@ -23,4 +20,10 @@ public class LecturerController {
         LecturerDto lecturer = lecturerService.createLecturer(lecturerDto);
         return new ResponseEntity<>(lecturer, HttpStatus.CREATED);
     }
+    @GetMapping("/get-by-id/{id}")
+    public ResponseEntity<LecturerDto> getById(@PathVariable Long id){
+        LecturerDto lecturer = lecturerService.getLecturerById(id);
+        return new ResponseEntity<>(lecturer,HttpStatus.FOUND);
+    }
+
 }

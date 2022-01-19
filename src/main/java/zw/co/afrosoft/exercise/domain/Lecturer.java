@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,5 +21,8 @@ public class Lecturer {
     private String title;
     private int age;
     private String nationalId;
+
+    @ManyToMany
+    private Set<Course> courses = new HashSet<>();
 
 }

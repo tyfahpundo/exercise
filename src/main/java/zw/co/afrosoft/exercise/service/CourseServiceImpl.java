@@ -5,6 +5,7 @@ import zw.co.afrosoft.exercise.domain.Course;
 import zw.co.afrosoft.exercise.domain.Lecturer;
 import zw.co.afrosoft.exercise.dto.CourseRequestDto;
 import zw.co.afrosoft.exercise.dto.CourseResponseDto;
+import zw.co.afrosoft.exercise.dto.LecturerDto;
 import zw.co.afrosoft.exercise.repository.CourseRepository;
 
 @Service
@@ -29,4 +30,13 @@ public class CourseServiceImpl implements CourseService{
         Course course = courseRepository.findById(courseId).get();
         return CourseResponseDto.createCourseResponseDto(course);
     }
+
+    @Override
+    public void save(CourseResponseDto course) {
+        Course sub = new Course();
+        sub.setCourseCode(course.getCourseCode());
+        sub.setCourseName(course.getCourseName());
+        courseRepository.save(sub);
+    }
+
 }

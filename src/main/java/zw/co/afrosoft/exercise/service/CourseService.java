@@ -4,6 +4,7 @@ import zw.co.afrosoft.exercise.domain.Course;
 import zw.co.afrosoft.exercise.domain.Lecturer;
 import zw.co.afrosoft.exercise.dto.CourseRequestDto;
 import zw.co.afrosoft.exercise.dto.CourseResponseDto;
+import zw.co.afrosoft.exercise.dto.LecturerDto;
 
 
 public interface CourseService {
@@ -11,4 +12,5 @@ public interface CourseService {
 
     CourseResponseDto getCourseById(Long courseId);
 
+    void save(CourseResponseDto course);
 }

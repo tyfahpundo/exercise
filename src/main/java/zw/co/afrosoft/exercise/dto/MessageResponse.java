@@ -1,11 +1,4 @@
 package zw.co.afrosoft.exercise.dto;
-/**
- * Date :October 14,2021
- * @author Tafadzwa Pundo
- * @version 1.0
- *
- */
-
 public class MessageResponse {
     private final String message;
 

@@ -3,7 +3,6 @@ package zw.co.afrosoft.exercise.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import zw.co.afrosoft.exercise.dto.LecturerDto;
 
 import javax.persistence.*;
 
@@ -25,13 +24,5 @@ public class Course {
         this.Lecturer = lecturer;
     }
 
-    public String generateCourseCode(){
-        long counter = 1;
-        String var = String.format("%04d",counter);
-        return getPrefix() + var;
-    }
-    public String getPrefix(){
-        return "CS";
-    }
 
 }

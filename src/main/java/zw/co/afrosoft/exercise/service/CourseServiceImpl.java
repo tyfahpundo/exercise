@@ -28,7 +28,7 @@ public class CourseServiceImpl implements CourseService{
         }
         Course course = new Course();
         course.setCourseName(CourseRequestDto.getCourseName());
-        course.setCourseCode(course.generateCourseCode());
+        course.setCourseCode(generateCourseCode());
         courseRepository.save(course);
         return CourseResponseDto.createCourseResponseDto(course);
     }
@@ -54,6 +54,18 @@ public class CourseServiceImpl implements CourseService{
         }
         course.get().assignLecturer(lecturer.get());
         courseRepository.save(course.get());
+    }
+    public String generateCourseCode(){
+        Course course = courseRepository.findFirstByOrderByIdDesc();
+        if(course.getId()==null){
+            return getPrefix()+String.format("%04d") + 1;
+        }
+        long counter = course.getId();
+        String var = String.format("%04d",++counter);
+        return getPrefix() + var;
+    }
+    public String getPrefix(){
+        return "CS";
     }
 
 }

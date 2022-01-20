@@ -3,6 +3,7 @@ package zw.co.afrosoft.exercise.service;
 import org.springframework.stereotype.Service;
 import zw.co.afrosoft.exercise.domain.Lecturer;
 import zw.co.afrosoft.exercise.dto.LecturerDto;
+import zw.co.afrosoft.exercise.dto.LecturerResponseDto;
 import zw.co.afrosoft.exercise.repository.LecturerRepository;
 
 import java.util.Optional;
@@ -28,7 +29,13 @@ public class LecturerServiceImpl implements LecturerService{
     }
 
     @Override
-    public LecturerDto getLecturerById(Long lecturerId) {
+    public LecturerResponseDto getLecturerById(Long lecturerId) {
+        Lecturer lecturer = lecturerRepository.findById(lecturerId).get();
+        return LecturerResponseDto.createLecturerResponseDto(lecturer);
+    }
+
+    @Override
+    public LecturerDto findLecturerById(Long lecturerId) {
         Lecturer lecturer = lecturerRepository.findById(lecturerId).get();
         return LecturerDto.createLecturerDto(lecturer);
     }

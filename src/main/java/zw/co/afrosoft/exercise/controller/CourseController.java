@@ -30,12 +30,13 @@ public class CourseController {
     }
     @PutMapping("/{courseId}/lecturer/{lecturerId}")
     public ResponseEntity<MessageResponse> assignLecturerToCourse(@PathVariable Long courseId, @PathVariable Long lecturerId){
-        CourseResponseDto course = courseService.getCourseById(courseId);
-        LecturerDto lecturer = lecturerService.getLecturerById(lecturerId);
-        Course sub = new Course();
-        sub.assignLecturer(lecturer);
-        courseService.save(course);
+        courseService.assignLecturerToCourse(courseId,lecturerId);
         MessageResponse messageResponse = MessageResponse.createMessageResponse("Assigned Lecturer to Course");
         return new ResponseEntity<>(messageResponse, HttpStatus.OK);
+    }
+    @GetMapping("/getById/{courseId}")
+    public ResponseEntity<CourseResponseDto> getCourseById(@PathVariable Long courseId){
+        CourseResponseDto course = courseService.getCourseById(courseId);
+        return new ResponseEntity<>(course,HttpStatus.FOUND);
     }
 }

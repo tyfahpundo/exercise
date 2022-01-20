@@ -23,7 +23,5 @@ public class CourseResponseDto {
         }
         return new CourseResponseDto(course.getId(), course.getCourseCode(), course.getCourseName(), course.getLecturer());
     }
-    public void assignLecturer(Lecturer lecturer) {
-        this.Lecturer = lecturer;
-    }
+
 }

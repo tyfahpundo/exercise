@@ -21,15 +21,10 @@ public class Course {
     @JoinColumn(name = "lecturer_id")
     private Lecturer Lecturer;
 
-    public void assignLecturer(LecturerDto lecturerDto) {
-        Lecturer lecture = new Lecturer();
-        lecture.setName(lecturerDto.getName());
-        lecture.setAge(lecturerDto.getAge());
-        lecture.setTitle(lecturerDto.getTitle());
-        lecture.setNationalId(lecturerDto.getNationalId());
-        lecture.setEmployeeNumber(lecturerDto.getEmployeeNumber());
-        this.Lecturer = lecture;
+    public void assignLecturer(Lecturer lecturer) {
+        this.Lecturer = lecturer;
     }
+
     public String generateCourseCode(){
         long counter = 1;
         String var = String.format("%04d",counter);

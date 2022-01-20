@@ -5,15 +5,17 @@ import zw.co.afrosoft.exercise.domain.Course;
 import zw.co.afrosoft.exercise.domain.Lecturer;
 import zw.co.afrosoft.exercise.dto.CourseRequestDto;
 import zw.co.afrosoft.exercise.dto.CourseResponseDto;
-import zw.co.afrosoft.exercise.dto.LecturerDto;
 import zw.co.afrosoft.exercise.repository.CourseRepository;
+import zw.co.afrosoft.exercise.repository.LecturerRepository;
 
 @Service
 public class CourseServiceImpl implements CourseService{
     private final CourseRepository courseRepository;
+    private final LecturerRepository lecturerRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, LecturerRepository lecturerRepository) {
         this.courseRepository = courseRepository;
+        this.lecturerRepository = lecturerRepository;
     }
 
     @Override
@@ -37,6 +39,14 @@ public class CourseServiceImpl implements CourseService{
         sub.setCourseCode(course.getCourseCode());
         sub.setCourseName(course.getCourseName());
         courseRepository.save(sub);
+    }
+
+    @Override
+    public void assignLecturerToCourse(Long courseId, Long lecturerId) {
+        Course course = courseRepository.findById(courseId).get();
+        Lecturer lecturer = lecturerRepository.findById(lecturerId).get();
+        course.assignLecturer(lecturer);
+        courseRepository.save(course);
     }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zw.co.afrosoft.exercise.dto.LecturerDto;
+import zw.co.afrosoft.exercise.dto.LecturerResponseDto;
 import zw.co.afrosoft.exercise.service.LecturerService;
 
 @RestController
@@ -21,8 +22,8 @@ public class LecturerController {
         return new ResponseEntity<>(lecturer, HttpStatus.CREATED);
     }
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<LecturerDto> getById(@PathVariable Long id){
-        LecturerDto lecturer = lecturerService.getLecturerById(id);
+    public ResponseEntity<LecturerResponseDto> getById(@PathVariable Long id){
+        LecturerResponseDto lecturer = lecturerService.getLecturerById(id);
         return new ResponseEntity<>(lecturer,HttpStatus.FOUND);
     }
 

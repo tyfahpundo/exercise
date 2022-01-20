@@ -22,7 +22,7 @@ public class Lecturer {
     private int age;
     private String nationalId;
 
-    @ManyToMany
-    private Set<Course> courses = new HashSet<>();
+//    @ManyToMany
+//    private Set<Course> courses = new HashSet<>();
 
 }

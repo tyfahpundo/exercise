@@ -1,14 +1,15 @@
 package zw.co.afrosoft.exercise.service;
 
-import org.springframework.stereotype.Service;
 import zw.co.afrosoft.exercise.domain.Lecturer;
 import zw.co.afrosoft.exercise.dto.LecturerDto;
 import zw.co.afrosoft.exercise.dto.LecturerResponseDto;
+import zw.co.afrosoft.exercise.exceptions.CourseNotFoundException;
+import zw.co.afrosoft.exercise.exceptions.CustomException;
 import zw.co.afrosoft.exercise.repository.LecturerRepository;
 
+import java.util.Objects;
 import java.util.Optional;
 
-@Service
 public class LecturerServiceImpl implements LecturerService{
     private final LecturerRepository lecturerRepository;
 
@@ -18,6 +19,9 @@ public class LecturerServiceImpl implements LecturerService{
 
     @Override
     public LecturerDto createLecturer(LecturerDto lecturerDto) {
+        if(Objects.isNull(lecturerDto)){
+            throw new CustomException("Lecturer fields must not be null");
+        }
         Lecturer lecturer = new Lecturer();
         lecturer.setName(lecturerDto.getName());
         lecturer.setAge(lecturerDto.getAge());
@@ -30,13 +34,11 @@ public class LecturerServiceImpl implements LecturerService{
 
     @Override
     public LecturerResponseDto getLecturerById(Long lecturerId) {
-        Lecturer lecturer = lecturerRepository.findById(lecturerId).get();
-        return LecturerResponseDto.createLecturerResponseDto(lecturer);
+        Optional<Lecturer> lecturer = lecturerRepository.findById(lecturerId);
+        if(lecturer.isEmpty()){
+            throw new CourseNotFoundException("No lecturer with id "+lecturerId+" was found");
+        }
+        return LecturerResponseDto.createLecturerResponseDto(lecturer.get());
     }
 
-    @Override
-    public LecturerDto findLecturerById(Long lecturerId) {
-        Lecturer lecturer = lecturerRepository.findById(lecturerId).get();
-        return LecturerDto.createLecturerDto(lecturer);
-    }
 }

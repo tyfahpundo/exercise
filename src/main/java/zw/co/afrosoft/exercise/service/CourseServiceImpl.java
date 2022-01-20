@@ -1,14 +1,17 @@
 package zw.co.afrosoft.exercise.service;
 
-import org.springframework.stereotype.Service;
 import zw.co.afrosoft.exercise.domain.Course;
 import zw.co.afrosoft.exercise.domain.Lecturer;
 import zw.co.afrosoft.exercise.dto.CourseRequestDto;
 import zw.co.afrosoft.exercise.dto.CourseResponseDto;
+import zw.co.afrosoft.exercise.exceptions.CourseNotFoundException;
+import zw.co.afrosoft.exercise.exceptions.CustomException;
 import zw.co.afrosoft.exercise.repository.CourseRepository;
 import zw.co.afrosoft.exercise.repository.LecturerRepository;
 
-@Service
+import java.util.Objects;
+import java.util.Optional;
+
 public class CourseServiceImpl implements CourseService{
     private final CourseRepository courseRepository;
     private final LecturerRepository lecturerRepository;
@@ -20,6 +23,9 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public CourseResponseDto createCourse(CourseRequestDto CourseRequestDto) {
+        if(Objects.isNull(CourseRequestDto)){
+            throw new CustomException("Course Details must not be null");
+        }
         Course course = new Course();
         course.setCourseName(CourseRequestDto.getCourseName());
         course.setCourseCode(course.generateCourseCode());
@@ -29,24 +35,25 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public CourseResponseDto getCourseById(Long courseId) {
-        Course course = courseRepository.findById(courseId).get();
-        return CourseResponseDto.createCourseResponseDto(course);
-    }
-
-    @Override
-    public void save(CourseResponseDto course) {
-        Course sub = new Course();
-        sub.setCourseCode(course.getCourseCode());
-        sub.setCourseName(course.getCourseName());
-        courseRepository.save(sub);
+        Optional<Course> course = courseRepository.findById(courseId);
+        if(!course.isPresent()){
+            throw new CourseNotFoundException("No course with id "+ courseId+" was Found");
+        }
+        return CourseResponseDto.createCourseResponseDto(course.get());
     }
 
     @Override
     public void assignLecturerToCourse(Long courseId, Long lecturerId) {
-        Course course = courseRepository.findById(courseId).get();
-        Lecturer lecturer = lecturerRepository.findById(lecturerId).get();
-        course.assignLecturer(lecturer);
-        courseRepository.save(course);
+        Optional<Course> course = courseRepository.findById(courseId);
+        Optional<Lecturer> lecturer = lecturerRepository.findById(lecturerId);
+        if(course.isEmpty()){
+            throw new CourseNotFoundException("No course with id "+courseId+" was found");
+        }
+        if(lecturer.isEmpty()){
+            throw new CourseNotFoundException("No lecturer with id "+lecturerId+" was found");
+        }
+        course.get().assignLecturer(lecturer.get());
+        courseRepository.save(course.get());
     }
 
 }

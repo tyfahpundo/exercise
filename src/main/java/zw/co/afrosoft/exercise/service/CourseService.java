@@ -12,7 +12,5 @@ public interface CourseService {
 
     CourseResponseDto getCourseById(Long courseId);
 
-    void save(CourseResponseDto course);
-
     void assignLecturerToCourse(Long courseId, Long lecturerId);
 }

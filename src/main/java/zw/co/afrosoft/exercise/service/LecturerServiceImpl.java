@@ -1,20 +1,26 @@
 package zw.co.afrosoft.exercise.service;
 
+import zw.co.afrosoft.exercise.domain.Course;
+import zw.co.afrosoft.exercise.domain.CourseLecturer;
 import zw.co.afrosoft.exercise.domain.Lecturer;
 import zw.co.afrosoft.exercise.dto.LecturerDto;
 import zw.co.afrosoft.exercise.dto.LecturerResponseDto;
 import zw.co.afrosoft.exercise.exceptions.CourseNotFoundException;
 import zw.co.afrosoft.exercise.exceptions.CustomException;
+import zw.co.afrosoft.exercise.repository.CourseLecturerRepository;
 import zw.co.afrosoft.exercise.repository.LecturerRepository;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 public class LecturerServiceImpl implements LecturerService{
     private final LecturerRepository lecturerRepository;
+    private final CourseLecturerRepository courseLecturerRepository;
 
-    public LecturerServiceImpl(LecturerRepository lecturerRepository) {
+    public LecturerServiceImpl(LecturerRepository lecturerRepository, CourseLecturerRepository courseLecturerRepository) {
         this.lecturerRepository = lecturerRepository;
+        this.courseLecturerRepository = courseLecturerRepository;
     }
 
     @Override

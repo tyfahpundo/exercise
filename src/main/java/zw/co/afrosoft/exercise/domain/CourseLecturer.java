@@ -5,23 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Lecturer {
+@NoArgsConstructor
+@Table(name = "course_lecturer")
+public class CourseLecturer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private String employeeNumber;
-    private String title;
-    private int age;
-    private String nationalId;
-
-
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+    @ManyToOne
+    @JoinColumn(name = "lecturer_id")
+    private Lecturer lecturer;
 }

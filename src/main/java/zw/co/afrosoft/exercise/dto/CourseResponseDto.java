@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import zw.co.afrosoft.exercise.domain.Course;
-import zw.co.afrosoft.exercise.domain.Lecturer;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Data
@@ -15,13 +15,14 @@ public class CourseResponseDto {
     private Long id;
     private String courseCode;
     private String courseName;
-    private Lecturer Lecturer;
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
 
     public static CourseResponseDto createCourseResponseDto(Course course){
         if(Objects.isNull(course)){
             return null;
         }
-        return new CourseResponseDto(course.getId(), course.getCourseCode(), course.getCourseName(), course.getLecturer());
+        return new CourseResponseDto(course.getId(), course.getCourseCode(), course.getCourseName(), course.getCreatedDate(),course.getModifiedDate());
     }
 
 }

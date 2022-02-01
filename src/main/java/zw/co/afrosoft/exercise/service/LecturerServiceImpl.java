@@ -3,13 +3,16 @@ package zw.co.afrosoft.exercise.service;
 import zw.co.afrosoft.exercise.domain.Course;
 import zw.co.afrosoft.exercise.domain.CourseLecturer;
 import zw.co.afrosoft.exercise.domain.Lecturer;
+import zw.co.afrosoft.exercise.dto.CourseResponseDto;
 import zw.co.afrosoft.exercise.dto.LecturerDto;
 import zw.co.afrosoft.exercise.dto.LecturerResponseDto;
 import zw.co.afrosoft.exercise.exceptions.CourseNotFoundException;
 import zw.co.afrosoft.exercise.exceptions.CustomException;
+import zw.co.afrosoft.exercise.exceptions.LecturerNotFoundException;
 import zw.co.afrosoft.exercise.repository.CourseLecturerRepository;
 import zw.co.afrosoft.exercise.repository.LecturerRepository;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -41,10 +44,8 @@ public class LecturerServiceImpl implements LecturerService{
     @Override
     public LecturerResponseDto getLecturerById(Long lecturerId) {
         Optional<Lecturer> lecturer = lecturerRepository.findById(lecturerId);
-        if(lecturer.isEmpty()){
-            throw new CourseNotFoundException("No lecturer with id "+lecturerId+" was found");
-        }
-        return LecturerResponseDto.createLecturerResponseDto(lecturer.get());
+        Set<Course> course = courseLecturerRepository.findAllByLecturer(lecturer.get());
+        return LecturerResponseDto.createLecturerResponseDto(lecturer.get(),course);
     }
 
 }

@@ -11,9 +11,7 @@ import zw.co.afrosoft.exercise.repository.CourseLecturerRepository;
 import zw.co.afrosoft.exercise.repository.CourseRepository;
 import zw.co.afrosoft.exercise.repository.LecturerRepository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -63,6 +61,7 @@ public class CourseServiceImpl implements CourseService{
         }
         assignCourseToLecturer(course.get(),lecturer.get());
     }
+
     public void assignCourseToLecturer(Course course,Lecturer lecturer){
         CourseLecturer courseLecturer = new CourseLecturer();
         courseLecturer.setCourse(course);

@@ -5,10 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import zw.co.afrosoft.exercise.repository.CourseLecturerRepository;
 import zw.co.afrosoft.exercise.repository.CourseRepository;
 import zw.co.afrosoft.exercise.repository.LecturerRepository;
-import zw.co.afrosoft.exercise.service.CourseService;
-import zw.co.afrosoft.exercise.service.CourseServiceImpl;
-import zw.co.afrosoft.exercise.service.LecturerService;
-import zw.co.afrosoft.exercise.service.LecturerServiceImpl;
+import zw.co.afrosoft.exercise.service.*;
 
 @Configuration
 public class Configurations {

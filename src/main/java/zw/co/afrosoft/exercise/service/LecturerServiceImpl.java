@@ -12,10 +12,8 @@ import zw.co.afrosoft.exercise.exceptions.LecturerNotFoundException;
 import zw.co.afrosoft.exercise.repository.CourseLecturerRepository;
 import zw.co.afrosoft.exercise.repository.LecturerRepository;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class LecturerServiceImpl implements LecturerService{
     private final LecturerRepository lecturerRepository;
@@ -39,13 +37,17 @@ public class LecturerServiceImpl implements LecturerService{
         lecturer.setNationalId(lecturerDto.getNationalId());
         lecturerRepository.save(lecturer);
         return LecturerDto.createLecturerDto(lecturer);
+
     }
 
     @Override
     public LecturerResponseDto getLecturerById(Long lecturerId) {
         Optional<Lecturer> lecturer = lecturerRepository.findById(lecturerId);
-        Set<Course> course = courseLecturerRepository.findAllByLecturer(lecturer.get());
-        return LecturerResponseDto.createLecturerResponseDto(lecturer.get(),course);
+        List<CourseLecturer> coursesLecturer = courseLecturerRepository.findAllByLecturer(lecturer.get());
+        Set<Course> courses = coursesLecturer.stream()
+                .map(CourseLecturer::getCourse)
+                .collect(Collectors.toSet());
+        return LecturerResponseDto.createLecturerResponseDto(lecturer.get(),courses);
     }
 
 }

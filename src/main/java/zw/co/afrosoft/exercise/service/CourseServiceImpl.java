@@ -43,7 +43,7 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public CourseResponseDto getCourseById(Long courseId) {
         Optional<Course> course = courseRepository.findById(courseId);
-        if(!course.isPresent()){
+        if(course.isEmpty()){
             throw new CourseNotFoundException("No course with id "+ courseId+" was Found");
         }
         return CourseResponseDto.createCourseResponseDto(course.get());
